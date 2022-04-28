@@ -6,19 +6,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+        <!-- animation -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         @livewireStyles
 
     </head>
     <body>
-
-        <main class="relative">
-            @include('layouts.menu.topbar')
-            <div class="container mx-auto px-4 sm:px-6 mt-8 ">
+        <main class="relative overflow-auto h-screen">
+            <div class="px-2 mt-2 mb-20">
+                @include('layouts.menu.topbar')
                 @yield('content')
             </div>
         </main>
 
-        <footer class="absolute bottom-0 p-2 bg-yellow-600  w-full flex justify-center">
+        <footer class="fixed bottom-0 p-2 bg-yellow-600  w-full flex justify-center z-20">
             <div class="text-white text-sm font-semibold">
                 &copy; {{ date('Y') }} - Creative System Consultant Sdn. Bhd.
             </div>

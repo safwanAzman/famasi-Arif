@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Report;
-
+use App\Models\Branch;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,4 +18,4 @@ use App\Http\Livewire\Report;
 //     return view('welcome');
 // });
 
-Route::get('/', Report::class)->name('Report');
+Route::get('/', Report::class)->name('report');
