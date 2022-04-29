@@ -10,4 +10,6 @@ class InvoiceHDR extends Model
     use HasFactory;
 
     protected $table = 'InvoiceHDR';
+
+    
 }

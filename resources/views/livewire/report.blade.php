@@ -72,7 +72,6 @@
                 <x-slot name="tbody">
                     
                     @forelse($result as $item)
-                    
                     <tr>
                         <x-table.table-body colspan="" class="text-left font-medium text-gray-900">
                             {{  $item->IH_UpdDate }} 
@@ -153,6 +152,9 @@
                     
                 </x-slot>
             </x-table.table>
+            <div class="mt-6">
+                {{ $result->withQueryString()->links()}}
+            </div>
             
         </div>
     </div>
