@@ -70,76 +70,110 @@
                     <x-table.table-header class="text-left"  sort="" value="S.Person" />
                 </x-slot>
                 <x-slot name="tbody">
-                    
-                    @forelse($result as $item)
-                    <tr>
+                    @forelse($result->groupBy('IH_DocNo') as $key => $item)
+                    <tr class="bg-yellow-50">
                         <x-table.table-body colspan="" class="text-left font-medium text-gray-900">
-                            {{  $item->IH_UpdDate }} 
-                            <br>
-                            ITEM NO<br>
-                            {{$item->ID_ItemNo}}
+                            {{  date('d-m-Y', strtotime($item[0]->IH_UpdDate)) }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left font-medium text-gray-900">
-                            {{ $item->IH_DocNo }}
-                            <br>
-                            DESCRIPTION<br>
-                            {{$item->ID_Description}}
+                            {{ $item[0]->IH_DocNo }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
-                            {{ $item->IH_Discount }}
-                            <br>
-                            <br>
-                            <br>
+                            {{ $item[0]->IH_Discount }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
-                            {{ $item->IH_DocAmt }} 
-                            <br>
-                            TAX<br>
-                            0
+                            {{ $item[0]->IH_DocAmt }} 
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
-                            {{ $item->IH_PaymentAmt }}
-                            <br>
-                            QTY<br>
-                            {{$item->ID_Quantity}}
+                            {{ $item[0]->IH_PaymentAmt }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
-                            {{ $item->IH_PymtModeReference ? $item->IH_PymtModeReference : '-' }}<br>
-                            PRICE<br>
-                            {{$item->ID_Price}}
+                            {{ $item[0]->IH_PymtModeReference}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
-                            {{$item->IH_ACCTCODE}}
-                            <br>
-                            DISC%<br>
-                            {{$item->ID_Disc}}
+                            {{$item[0]->IH_ACCTCODE}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
-                            {{ $item->IH_Rounding }}
-                            <br>
-                            DISC$<br>
-                            {{$item->ID_Price * $item->ID_Disc }}
+                            {{ $item[0]->IH_Rounding }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
-                            {{ $item->IH_ServiceTax }}
-                            <br>
-                            S/P<br>
-                            {{$item->ID_SellingPrice }}
-                            
+                            {{ $item[0]->IH_ServiceTax }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
-                            {{ $item->IH_Total }}
-                            <br>
-                            Amount<br>
-                            {{$item->ID_TotalEx }}
+                            {{ $item[0]->IH_Total }}
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="text-left font-medium text-gray-900">
-                            {{ $item->IH_Salesperson }}
-                            <br>
-                            <br>
-                            <br>
+                        <x-table.table-body colspan="" class="text-center font-medium text-gray-900">
+                            {{ $item[0]->IH_Salesperson }}
                         </x-table.table-body>
                     </tr>
+
+                    <tr class="bg-gray-100">
+                        <x-table.table-body colspan="" class="text-left font-medium text-gray-900">
+                            ITEM NO
+                        </x-table.table-body>
+                        <x-table.table-body colspan="2" class="text-left font-medium text-gray-900">
+                            DESCRIPTION
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            TAX
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            QTY
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            PRICE
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            DISC%
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            DISC$
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            S/P
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            Amount
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-center font-medium text-gray-900">
+                            S.Person
+                        </x-table.table-body>
+                    </tr>
+
+                    @foreach ($item as $key => $row)
+                    <tr>
+                        <x-table.table-body colspan="" class="text-left font-medium text-gray-900">
+                            {{$row->ID_ItemNo}}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="2" class="text-left font-medium text-gray-900">
+                            {{$row->ID_Description}}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            -
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            {{$row->ID_Quantity}}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            {{$row->ID_Price}}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            {{$row->ID_Disc}}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            {{$row->ID_Price * $row->ID_Disc }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            {{$row->ID_SellingPrice }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-right font-medium text-gray-900">
+                            {{$row->ID_TotalEx }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-center font-medium text-gray-900">
+                            S.Person
+                        </x-table.table-body>
+                    </tr>  
+                    @endforeach
                     @empty
                     <tr>
                         <x-table.table-body colspan="11" class="text-center font-medium text-gray-900">
@@ -147,9 +181,6 @@
                         </x-table.table-body>
                     </tr>
                     @endforelse
-                    
-                    
-                    
                 </x-slot>
             </x-table.table>
             <div class="mt-6">

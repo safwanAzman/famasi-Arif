@@ -30,81 +30,117 @@
     </tr>
     </thead>
     <tbody>
-        @forelse($result as $item)          
-        <tr>
-            <td colspan="" align="left" >
-                {{  $item->IH_UpdDate }} 
-                <br>
-                ITEM NO<br>
-                {{$item->ID_ItemNo}}
-            </td>
-            <td colspan="" align="left">
-                {{ $item->IH_DocNo }}
-                <br>
-                DESCRIPTION<br>
-                {{$item->ID_Description}}
-            </td>
-            <td colspan="" align="right">
-                {{ $item->IH_Discount }}
-                <br>
-                <br>
-                <br>
-            </td>
-            <td colspan="" align="right">
-                {{ $item->IH_DocAmt }} 
-                <br>
-                TAX<br>
-                0
-            </td>
-            <td colspan="" align="right">
-                {{ $item->IH_PaymentAmt }}
-                <br>
-                QTY<br>
-                {{$item->ID_Quantity}}
-            </td>
-            <td colspan="" align="right">
-                {{ $item->IH_PymtModeReference ? $item->IH_PymtModeReference : '-' }}<br>
-                PRICE<br>
-                {{$item->ID_Price}}
-            </td>
-            <td colspan="" align="right">
-                {{$item->IH_ACCTCODE}}
-                <br>
-                DISC%<br>
-                {{$item->ID_Disc}}
-            </td>
-            <td colspan="" align="right">
-                {{ $item->IH_Rounding }}
-                <br>
-                DISC$<br>
-                {{$item->ID_Price * $item->ID_Disc }}
-            </td>
-            <td colspan="" align="right">
-                {{ $item->IH_ServiceTax }}
-                <br>
-                S/P<br>
-                {{$item->ID_SellingPrice }}
-                
-            </td>
-            <td colspan="" align="right">
-                {{ $item->IH_Total }}
-                <br>
-                Amount<br>
-                {{$item->ID_TotalEx }}
-            </td>
-            <td colspan="" align="right">
-                {{ $item->IH_Salesperson }}
-                <br>
-                <br>
-                <br>
-            </td>
-        </tr>
-        @empty
-        <tr>
-            <td colspan="11" align="center">
-                No Data
-            </td>
-        </tr>
+        @forelse($result->groupBy('IH_DocNo') as $key => $item)
+            <tr>
+                <td colspan="" align="left" >
+                    {{  date('d-m-Y', strtotime($item[0]->IH_UpdDate)) }}
+                </td>
+                <td colspan="" align="left" >
+                    {{ $item[0]->IH_DocNo }}
+                </td>
+                <td colspan="" align="right" >
+                    {{ $item[0]->IH_Discount }}
+                </td>
+                <td colspan="" align="right" >
+                    {{ $item[0]->IH_DocAmt }} 
+                </td>
+                <td colspan="" align="right" >
+                    {{ $item[0]->IH_PaymentAmt }}
+                </td>
+                <td colspan="" align="right" >
+                    {{ $item[0]->IH_PymtModeReference}}
+                </td>
+                <td colspan="" align="right" >
+                    {{$item[0]->IH_ACCTCODE}}
+                </td>
+                <td colspan="" align="right" >
+                    {{ $item[0]->IH_Rounding }}
+                </td>
+                <td colspan="" align="right" >
+                    {{ $item[0]->IH_ServiceTax }}
+                </td>
+                <td colspan="" align="right" >
+                    {{ $item[0]->IH_Total }}
+                </td>
+                <td colspan="" class="text-center font-medium text-gray-900">
+                    {{ $item[0]->IH_Salesperson }}
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="" align="left" >
+                    <b>ITEM NO</b>
+                </td>
+                <td colspan="2" align="left" >
+                    <b>DESCRIPTION</b>
+                </td>
+                <td colspan="" align="right" >
+                    <b>TAX</b>
+                </td>
+                <td colspan="" align="right" >
+                    <b>QTY</b>
+                </td>
+                <td colspan="" align="right" >
+                    <b>PRICE</b>
+                </td>
+                <td colspan="" align="right" >
+                    <b>DISC%</b>
+                </td>
+                <td colspan="" align="right" >
+                    <b>DISC$</b>
+                </td>
+                <td colspan="" align="right" >
+                    <b>S/P</b>
+                </td>
+                <td colspan="" align="right" >
+                    <b>Amount</b>
+                </td>
+                <td colspan="" class="text-center font-medium text-gray-900">
+                    <b>S.Person</b>
+                </td>
+            </tr>
+
+            @foreach ($item as $key => $row)
+            <tr>
+                <td colspan="" align="left" >
+                    {{$row->ID_ItemNo}}
+                </td>
+                <td colspan="2" align="left" >
+                    {{$row->ID_Description}}
+                </td>
+                <td colspan="" align="right" >
+                    -
+                </td>
+                <td colspan="" align="right" >
+                    {{$row->ID_Quantity}}
+                </td>
+                <td colspan="" align="right" >
+                    {{$row->ID_Price}}
+                </td>
+                <td colspan="" align="right" >
+                    {{$row->ID_Disc}}
+                </td>
+                <td colspan="" align="right" >
+                    {{$row->ID_Price * $row->ID_Disc }}
+                </td>
+                <td colspan="" align="right" >
+                    {{$row->ID_SellingPrice }}
+                </td>
+                <td colspan="" align="right" >
+                    {{$row->ID_TotalEx }}
+                </td>
+                <td colspan="" class="text-center font-medium text-gray-900">
+                    S.Person
+                </td>
+            </tr>  
+            @endforeach
+            @empty
+
+            <tr>
+                <td colspan="11" class="text-center font-medium text-gray-900">
+                    No Data
+                </td>
+            </tr>
         @endforelse
     </tbody>
 </table>

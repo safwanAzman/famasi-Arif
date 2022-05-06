@@ -21,7 +21,7 @@ class Report extends Component
 
     public function mount()
     {
-        $this->startDate = now()->format('Y-m-d');
+        $this->startDate =  now()->format('Y-m-d'); //'2021-10-14';
         $this->endDate = now()->lastOfMonth()->format('Y-m-d');
         $this->report_branch;
 
@@ -40,11 +40,11 @@ class Report extends Component
         ->join('InvoiceDtl', 'InvoiceHdr.IH_DocNo', '=', 'InvoiceDtl.ID_DocNo')
         ->orderBy('IH_PaymentMode','asc', 'IH_UpdDate' ,'asc')
         ->whereBetween('IH_UpdDate', [$this->startDate, $this->endDate])
-        ->paginate(5);
-        
+        ->paginate(10);
 
+        
         return view('livewire.report',[
-            'result' => $result
+            'result' => $result,
         ])->extends('default.default');
     }
 }
